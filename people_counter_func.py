@@ -1,5 +1,5 @@
-from centroid_tracker import CentroidTracker
-from trackable_object import TrackableObject
+from CentroidTracker import CentroidTracker
+from TrackableObject import TrackableObject
 from constants import *
 from imutils.video import FPS
 import numpy as np
@@ -33,7 +33,7 @@ def detect_objects(image, current_model):
             endY = box[1] + box[3]
 
             rect = dlib.rectangle(startX, startY, endX, endY)
-            new_rectangles.append((startX, startY, endX, endY))  # TODO
+            new_rectangles.append((startX, startY, endX, endY))
             tracker = dlib.correlation_tracker()
             rgb = cv.cvtColor(image, cv.COLOR_BGR2RGB)
             tracker.start_track(rgb, rect)
