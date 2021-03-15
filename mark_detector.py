@@ -58,15 +58,15 @@ def detect_shape(c):
 
 def filter_crops(image, person_boxes):
     person_crops = crop_peoples(image, person_boxes)
-    arg = {'down': (50, 70, 73), 'up': (75, 255, 255), 'blur': (1, 1), 'erode': 0, 'dilate': 0}
-    arg_2 = {'down': (105, 134, 72), 'up': (123, 255, 255), 'blur': (1, 1), 'erode': 0, 'dilate': 0}
+    green = {'down': (50, 70, 73), 'up': (75, 255, 255), 'blur': (1, 1), 'erode': 0, 'dilate': 0}
+    blue = {'down': (105, 134, 72), 'up': (123, 255, 255), 'blur': (1, 1), 'erode': 0, 'dilate': 0}
 
     for (box, crop, i) in zip(person_boxes, person_crops, range(len(person_crops))):
         if crop.shape[0] * crop.shape[1] > 1:
             text = 'unknown'
             hsv = cv.cvtColor(crop, cv.COLOR_BGR2HSV)
-            mask = cv.inRange(hsv, arg['down'], arg['up'])
-            mask = cv.blur(mask, arg['blur'])
+            mask = cv.inRange(hsv, green['down'], green['up'])
+            mask = cv.blur(mask, green['blur'])
             contours, hierarchy = cv.findContours(mask, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
 
             if contours:
@@ -81,13 +81,13 @@ def filter_crops(image, person_boxes):
                 (x, y, w, h) = cv.boundingRect(contour)
                 mark = hsv[y:y + h, x:x + w]
 
-                mark = cv.inRange(mark, arg_2['down'], arg_2['up'])
+                mark = cv.inRange(mark, blue['down'], blue['up'])
 
                 result = cv.countNonZero(mark)
                 if result:
-                    text = 'blue'
+                    text = '11 IT'
                 else:
-                    text = 'black'
+                    text = '10 A'
 
                 blk = np.zeros(crop.shape, np.uint8)
                 cv.rectangle(blk, (x, y), (x + w, y + h), (0, 255, 0), cv.FILLED)

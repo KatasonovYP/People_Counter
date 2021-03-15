@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
 import argparse
+import imutils
 import time
 
 
@@ -25,10 +26,11 @@ def parser():
     """
 
     arguments = {
-        'weights': 'Data/models/yolo/v4-tiny.weights',
-        'cfg': 'Data/models/yolo/v4-tiny.cfg',
+        'weights': 'Data/models/yolo/v3.weights',
+        'cfg': 'Data/models/yolo/v3.cfg',
         'names': 'Data/models/yolo/coco.names',
-        'input': 'Data/video/entry_2_in_1.mp4'
+        'input': 'Data/video/entry_2_in_1.mp4',
+        'faces': 'Data/images/faces/'
     }
 
     return arguments

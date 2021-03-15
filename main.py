@@ -1,6 +1,7 @@
 import imutils
 from mark_detector import *
-from people_counter_func import *
+from people_counter import *
+from FaceFinder import FaceFinder
 from constants import *
 '''
 example for parser:
@@ -26,7 +27,12 @@ if __name__ == '__main__':
     model = load_model(arg['weights'], arg['cfg'])
     CLASSES = load_class_names(arg['names'])
 
+    ff = FaceFinder(paths_to_photo_directory=arg['faces'])
+
     fps = FPS().start()
+
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter('output.avi', fourcc, 20.0, (640, 480))
 
     # start_video_from(video, 500)
 
@@ -45,6 +51,7 @@ if __name__ == '__main__':
         h = H
         w = W // 4 * 3
         status = ''
+        image = ff.find_faces(frame)
         if totalFrames % skip_frames == 0:
             rects, trackers = detect_objects(frame, model)
         elif totalFrames % skip_frames == skip_frames - 1:
